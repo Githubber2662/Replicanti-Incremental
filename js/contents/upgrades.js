@@ -43,7 +43,7 @@ const UPGS = {
                 let lvl = x.mul(FORMS.replicanti.galaxy.effect()).mul(FORMS.inf.replicanti.effect()).mul(CHALS.onChal("normal4") || CHALS.onChal("inf1") ? UPGS.replicanti[4].effect() : 1)
                 if (player.prestige.upgrades.includes(11)) lvl = lvl.mul(2)
                 if (player.prestige.upgrades.includes(12)) lvl = lvl.pow(UPGS.prestige[12].effect())
-                return lvl.div(5).add(1)
+                return ExpantaNum(1.2).pow(lvl)
             },
             desc(eff=this.effect()) { return `Multiple Replicanti growth by ${format(eff)}x.` },
             bulk(x=player.replicanti) {
