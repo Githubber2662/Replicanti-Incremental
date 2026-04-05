@@ -29,6 +29,7 @@ const FORMS = {
             if (player.chals.comps.includes("inf3")) a = a.pow(0.75)
             if (CHALS.onChal("normal1") || CHALS.onChal("inf1")) a = a.pow(1.5)
             if (CHALS.onChal("inf3")) a = a.pow(2)
+            a = a.sub(1)
             return a.max(1)
         },
         superLimit() {
