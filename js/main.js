@@ -1,5 +1,5 @@
 var diff = 0;
-var date = Date.now();
+var date = performance.now();
 var player
 
 const ST_NAMES = [
@@ -68,9 +68,9 @@ function format(ex, acc=3) {
 */
 
 function loop() {
-    diff = Date.now()-date;
+    diff = performance.now()-date;
     calc(diff/1000);
-    date = Date.now();
+    date = performance.now();
 }
 
 setInterval(loop, 50)
