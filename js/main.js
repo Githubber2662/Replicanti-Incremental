@@ -1,5 +1,5 @@
 var diff = 0;
-var date = Date.now();
+var date = performance.now();
 var player
 
 const ST_NAMES = [
@@ -13,17 +13,18 @@ const ST_NAMES = [
 
 function format(ex, acc=4, style="sc") {
     ex = E(ex)
-    if (ex.isInfinite() || (ex.gte(FORMS.INF) && !player.breakInf)) return 'Infinity'
     neg = ex.isNegative()?"-":""
+    if (ex.isInfinite()) return ex
     if (ex.isNegative()) ex = ex.mul(-1)
     let e = ex.log10().floor()
+    if(ex.slog(10).gte(acc)) return neg+ex
     switch (style) {
         case "sc":
-            if (e.lt(4)) {
+            if (e.lte(acc)) {
                 return neg+ex.toFixed(Math.max(Math.min(acc-e.toNumber(), acc), 0))
             } else {
                 let m = ex.div(E(10).pow(e))
-                return neg+(e.log10().gte(9)?'':m.toFixed(4))+'e'+format(e, 0, "sc")
+                return neg+(e.log10().gt(acc)?'':m.toFixed(acc))+'e'+format(e, 0, "sc")
             }
         case "st":
             if (e.lt(3)) {
@@ -68,9 +69,9 @@ function format(ex, acc=3) {
 */
 
 function loop() {
-    diff = Date.now()-date;
+    diff = performance.now()-date;
     calc(diff/1000);
-    date = Date.now();
+    date = performance.now();
 }
 
-setInterval(loop, 50)
+setInterval(loop, 1)
