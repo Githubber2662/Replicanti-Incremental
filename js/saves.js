@@ -208,6 +208,9 @@ function importy() {
         load(loadgame)
         location.reload()
     }
+    else {
+        wipe()
+    }
 }
 
 function loadGame() {
