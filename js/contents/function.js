@@ -19,7 +19,7 @@ const FORMS = {
         },
         limit() {
             let limit = E(10).mul(UPGS.replicanti[1].effect())
-            return limit
+            return E(Infinity)
         },
         penalty(x = player.replicanti) {
             if (x.lt(this.limit())) return E(1)
@@ -29,7 +29,7 @@ const FORMS = {
             if (player.chals.comps.includes("inf3")) a = a.pow(0.75)
             if (CHALS.onChal("normal1") || CHALS.onChal("inf1")) a = a.pow(1.5)
             if (CHALS.onChal("inf3")) a = a.pow(2)
-            return a.max(1)
+            return E(1)
         },
         superLimit() {
             let a = FORMS.quarterINF
@@ -38,7 +38,7 @@ const FORMS = {
             if (player.inf.upgrades.includes(11)) a = a.mul(UPGS.post_inf[11].effect())
             if (player.prestige.upgrades.includes(33)) a = a.pow(1.15)
             if (!player.inf.upgrades.includes(31)) a = a.softcap("e2000",0.5,0)
-            return a.max(1)
+            return E(Infinity)
         },
         superPenalty(x = player.replicanti) {
             if (x.lt(this.superLimit())) return E(1)
@@ -47,18 +47,18 @@ const FORMS = {
             a = a.pow(2).mul(3).pow(a).pow(this.hyperPenalty())
             if (CHALS.onChal("inf3")) a = a.pow(2)
             if (player.inf.upgrades.includes(14)) a = a.pow(0.85)
-            return a
+            return E(1)
         },
         hyperLimit() {
             let a = E(2).pow(E(2).pow(15))
             if (player.inf.upgrades.includes(33)) a = a.mul(UPGS.post_inf[33].effect())
-            return a
+            return E(Infinity)
         },
         hyperPenalty(x = player.replicanti) {
             if (x.lt(this.hyperLimit())) return E(1)
             let a = x.logBase(this.hyperLimit())
             a = a.pow(a.mul(2))
-            return a.max(1)
+            return E(1)
         },
 
         galaxy: {
