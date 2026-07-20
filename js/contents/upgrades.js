@@ -4,7 +4,7 @@ const UPGS = {
         can(x) { return player.replicanti.gte(this[x].cost()) && (x == 2 ? !(CHALS.onChal("normal2") || CHALS.onChal("inf1")) : true) },
         buy(x) {
             if (this.can(x)) {
-                if (!ACHS.has(34)) player.replicanti = player.replicanti.sub(this[x].cost()).max(1)
+                if (!ACHS.has(34)) player.replicanti = player.replicanti.div(this[x].cost()).max(1)
                 player.rep_upgs[x] = player.rep_upgs[x].add(1)
             }
         },
@@ -15,7 +15,7 @@ const UPGS = {
             if (this.can(x)) {
                 let bulk = this[x].bulk()
                 if (bulk.gt(player.rep_upgs[x])) {
-                    if (!ACHS.has(34)) player.replicanti = player.replicanti.sub(this[x].cost(bulk.sub(1))).max(1)
+                    if (!ACHS.has(34)) player.replicanti = player.replicanti.div(this[x].cost(bulk.sub(1))).max(1)
                     player.rep_upgs[x] = bulk
                 }
             }
@@ -43,7 +43,7 @@ const UPGS = {
                 let lvl = x.mul(FORMS.replicanti.galaxy.effect()).mul(FORMS.inf.replicanti.effect()).mul(CHALS.onChal("normal4") || CHALS.onChal("inf1") ? UPGS.replicanti[4].effect() : 1)
                 if (player.prestige.upgrades.includes(11)) lvl = lvl.mul(2)
                 if (player.prestige.upgrades.includes(12)) lvl = lvl.pow(UPGS.prestige[12].effect())
-                return lvl.div(5).add(1)
+                return E(1.2).pow(lvl)
             },
             desc(eff=this.effect()) { return `Multiple Replicanti growth by ${format(eff)}x.` },
             bulk(x=player.replicanti) {
