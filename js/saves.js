@@ -215,7 +215,7 @@ function importy() {
 
 function loadGame() {
     wipe()
-    load(localStorage.getItem("ReplicantiIncrementalSave"))
+    if(localStorage.getItem("ReplicantiIncrementalSave") != null) load(localStorage.getItem("ReplicantiIncrementalSave"))
     loadVue()
     setInterval(save,1000)
 }
